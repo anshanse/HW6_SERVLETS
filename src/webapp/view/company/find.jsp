@@ -23,13 +23,22 @@
   <body>
     <c:import url="/view/company/navbarcompany.jsp"/>
     <main>
-      <h1>Find company by ID or name</h1>
+      <h1>Find company by ID</h1>
       <form action="#" class="modal-form">
         <label class="modal-field">
-          Enter ID or name
-          <input type="text" name="company" class="modal-input" required />
+          Enter company ID
+          <input type="text" name="${companyId}" class="modal-input" required pattern="/d+"/>
         </label>
-        <button type="submit" class="modal-submit-btn btn">Search!</button>
+        <button type="submit" class="modal-submit-btn btn" disabled><a class="link" href="${pageContext.request.contextPath}/company/find">Search!</button>
+		
+		<div class="results">
+	  <c:if test="${not empty company}" >	
+	  
+	  <a href="${pageContext.request.contextPath}/company/get?id=${company.id}">${company.name}</a>
+		
+		</c:if>
+		${message}
+	</div>
       </form>
     </main>
   </body>

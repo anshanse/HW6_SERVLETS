@@ -23,36 +23,16 @@
   <body>
     <c:import url="/view/company/navbarcompany.jsp"/>
 	
-	<c:if test="${not empty allCompanies}">
-    <table class="zui-table">
-        <thead>
-        <tr>
-            <th>Company</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${allCompanies}" var="company">
-            <tr>
-                <td>
-                    <a href="${pageContext.request.contextPath}/company/get?id=${company.companyID}">
-                            ${company.name}</a><br>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-</c:if>
-	show companies
 	<main>
           <h1>List of companies</h1>
-      <button type="button" class="modal-submit-btn btn"><a href="${pageContext.request.contextPath}/company/show">Get list!</a></button>
-	  jstl block:
-	  <p>@{pathInfo}</p>
+      <button type="button" class="modal-submit-btn btn" disabled><a class="link" href="${pageContext.request.contextPath}/company/show">Get list!</a></button>
+	  <div class="results">
 	  <c:if test="${not empty allCompanies}" >	
 	  <c:forEach items="${allCompanies}" var="company">
-	  <a href="${pageContext.request.contextPath}/company/get?id=${company.companyID}">${company.name}</a>
+	  <a href="${pageContext.request.contextPath}/company/get?id=${company.id}">${company.name}</a>
 		</c:forEach>
 		</c:if>
+	</div>
 	</main>
   </body>
 </html>

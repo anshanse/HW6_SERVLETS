@@ -1,5 +1,6 @@
 package ua.GoIT_Dev2.ProjectManagementSystem.controller.servlet;
 
+import ua.GoIT_Dev2.ProjectManagementSystem.model.BaseEntity;
 import ua.GoIT_Dev2.ProjectManagementSystem.model.Company;
 import ua.GoIT_Dev2.ProjectManagementSystem.service.BaseService;
 
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.io.Serial;
 import java.util.List;
 
-@WebServlet("/company/")
+@WebServlet("/company/*")
 public class CompanyServlet extends HttpServlet {
 
     @Serial
@@ -23,19 +24,26 @@ public class CompanyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
-        String[] command = pathInfo.split("/");
-        String action = getAction(req);
-        if (command[0].equals("show")){
-            resp.sendRedirect("google.com");
+        if (pathInfo.equals("/show")){
+            //resp.sendRedirect("google.com");
             List<Company> allCompanies = service.getAll(Company.class);
             req.setAttribute("allCompanies", allCompanies);
-            req.getRequestDispatcher("\\view\\company\\show.jsp").forward(req,resp);
-        }else if (pathInfo.equals("find")){
-            req.getRequestDispatcher("\\view\\company\\find.jsp").forward(req,resp);
+            req.getRequestDispatcher("/view/company/show.jsp").forward(req,resp);
+        }else if (pathInfo.equals("/find")){
+            String companyId = req.getParameter("companyId");
+            BaseEntity company = service.read(Company.class, Long.valueOf(companyId));
+            if (company == null){
+                String message = String.format("Company with ID %s not exist", companyId);
+                req.setAttribute("message", message);
+                req.getRequestDispatcher("/view/company/find.jsp").forward(req,resp);
+            } else {
+                req.setAttribute("company", company);
+                req.getRequestDispatcher("/view/company/find.jsp").forward(req, resp);
+            }
         }else if (pathInfo.equals("create")){
-            req.getRequestDispatcher("\\view\\company\\create.jsp").forward(req,resp);
+            req.getRequestDispatcher("/view/company/create.jsp").forward(req,resp);
         }else if (pathInfo.equals("delete")){
-            req.getRequestDispatcher("\\view\\company\\delete.jsp").forward(req,resp);
+            req.getRequestDispatcher("/view/company/delete.jsp").forward(req,resp);
         }
     }
 

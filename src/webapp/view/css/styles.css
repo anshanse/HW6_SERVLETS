@@ -19,8 +19,10 @@ h1 {
   font-size: 24px;
   color: var(--text-color);
 }
+a {
+	text-decoration: none;
+}
 .link {
-  text-decoration: none;
   color: var(--title-color);
 }
 .active {
@@ -32,6 +34,11 @@ h1 {
   list-style: none;
   display: flex;
   justify-content: left;
+}
+.results{
+	margin-top: 25px;
+	display: flex;
+	flex-direction: column;
 }
 
 /* Dropdown Button */
@@ -143,9 +150,4 @@ h1 {
   border: none;
 }
 
-.modal-submit-btn:hover,
-:focus {
-  color: var(--accent-color);
-  background-color: rgba(255, 255, 255, 1);
-  border: 1px solid var(--accent-color);
-}
+
