@@ -24,12 +24,13 @@ public class CompanyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
+        String action = getAction(req);
         if (pathInfo.equals("/show")){
-            //resp.sendRedirect("google.com");
             List<Company> allCompanies = service.getAll(Company.class);
             req.setAttribute("allCompanies", allCompanies);
             req.getRequestDispatcher("/view/company/show.jsp").forward(req,resp);
-        }else if (pathInfo.equals("/find")){
+        }
+        if (action.startsWith("/find")){
             String companyId = req.getParameter("companyId");
             BaseEntity company = service.read(Company.class, Long.valueOf(companyId));
             if (company == null){
@@ -47,7 +48,22 @@ public class CompanyServlet extends HttpServlet {
         }
     }
 
-
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = getAction(req);
+        if (action.startsWith("/find")) {
+            String companyId = req.getParameter("companyId");
+            BaseEntity company = service.read(Company.class, Long.valueOf(companyId));
+            if (company == null) {
+                String message = String.format("Company with ID %s not exist", companyId);
+                req.setAttribute("message", message);
+                req.getRequestDispatcher("/view/company/find.jsp").forward(req, resp);
+            } else {
+                req.setAttribute("company", company);
+                req.getRequestDispatcher("/view/company/find.jsp").forward(req, resp);
+            }
+        }
+    }
 
     private String getAction(HttpServletRequest req) {
         String requestURI = req.getRequestURI();
