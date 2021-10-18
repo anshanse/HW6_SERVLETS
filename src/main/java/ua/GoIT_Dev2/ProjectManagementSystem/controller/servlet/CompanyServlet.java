@@ -51,7 +51,7 @@ public class CompanyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = getAction(req);
-        if (action.startsWith("/find")) {
+        //if (action.startsWith("/find")) {
             String companyId = req.getParameter("companyId");
             BaseEntity company = service.read(Company.class, Long.valueOf(companyId));
             if (company == null) {
@@ -62,7 +62,7 @@ public class CompanyServlet extends HttpServlet {
                 req.setAttribute("company", company);
                 req.getRequestDispatcher("/view/company/find.jsp").forward(req, resp);
             }
-        }
+        //}
     }
 
     private String getAction(HttpServletRequest req) {
