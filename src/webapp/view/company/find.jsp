@@ -23,25 +23,43 @@
   <body>
     <c:import url="/view/company/navbarcompany.jsp"/>
     <main>
-      <h1>Find company by ID</h1>
-      <form action="/find" method="POST" class="modal-form">
-        <label class="modal-field">
-          Enter company ID
-          <input type="text" name="companyId" class="modal-input" required pattern="\d+"/>
-        </label>
-        <button type="submit" class="modal-submit-btn btn">Search!</button>
+		  <h1>Find company by ID</h1>
+		  <form action="/company/find" method="get" class="modal-form">
+			<label class="modal-field">
+			  Enter company ID
+			  <input type="text" name="companyId" class="modal-input" pattern="\d+"/>
+			</label>
+			<label class="modal-field">
+			  Enter company name
+			  <input type="text" name="companyName" class="modal-input" />
+			</label>
+			<button type="submit" class="modal-submit-btn btn">Search!</button>
 		
 		
-      </form>
-	  <div class="results">
-		
-	  <c:if test="${not empty company}" >	
-	  
-	  <a href="${pageContext.request.contextPath}/company/get?id=${company.id}">${company.name}</a>
-		
-		</c:if>
-		${message}
-	</div>
+		</form>
+		<div class="results">
+			<c:if test="${not empty company}" >	
+		  
+			<table class="table">
+			<thead>
+			  <tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>City</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr>
+				<td>${company.id}</td>
+				<td>${company.name}</td>
+				<td>${company.city}</td>
+			  </tr>
+			</tbody>
+		  </table>
+			
+			</c:if>
+			${message}
+		</div>
     </main>
   </body>
 </html>

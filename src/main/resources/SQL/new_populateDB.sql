@@ -146,3 +146,14 @@ INSERT INTO developers_skills (developers_id, skills_id) VALUES (4, 12);
 
 COMMIT;
 
+START TRANSACTION;
+USE second_DB;
+ALTER TABLE companies
+ADD COLUMN `city` VARCHAR(45) NULL AFTER `company_name`;
+
+UPDATE `second_db`.`companies` SET `city` = 'City1' WHERE (`id` = '1');
+UPDATE `second_db`.`companies` SET `city` = 'City2' WHERE (`id` = '2');
+UPDATE `second_db`.`companies` SET `city` = 'City3' WHERE (`id` = '3');
+
+COMMIT;
+

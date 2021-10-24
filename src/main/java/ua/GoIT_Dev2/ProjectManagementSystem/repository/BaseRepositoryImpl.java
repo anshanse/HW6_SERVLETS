@@ -30,6 +30,7 @@ public class BaseRepositoryImpl<T extends BaseEntity<ID>, ID> implements BaseRep
     private final PreparedStatement deletePreparedStatement;
     private final PreparedStatement createPreparedStatement;
     private final PreparedStatement updatePreparedStatement;
+    private final PreparedStatement findByNamePreparedStatement;
 
     @SneakyThrows
     public BaseRepositoryImpl(Class<T> modelClass) {
@@ -57,6 +58,7 @@ public class BaseRepositoryImpl<T extends BaseEntity<ID>, ID> implements BaseRep
                 + fieldsForCreate + ")" + " VALUES (" + countValues + ");", generatedColumns);
         this.updatePreparedStatement = connection.prepareStatement(
                 "UPDATE " + tableName + " SET " + fieldsForUpdate + " WHERE id=?", generatedColumns);
+        this.findByNamePreparedStatement = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE company_name=?;", generatedColumns);
     }
 
     private String getColumnName (Field field){
@@ -75,7 +77,20 @@ public class BaseRepositoryImpl<T extends BaseEntity<ID>, ID> implements BaseRep
 
     @Override
     public T getOne(ID id) {
-        return findById(id).orElseThrow(()-> new RuntimeException("Entity with id " + id + " not found"));
+        Optional<T> byId = findById(id);
+        if (byId.isEmpty()){
+            return null;
+        } else {
+            return findById(id).orElseThrow(() -> new RuntimeException("Entity with id " + id + " not found"));
+        }
+    }
+
+    @SneakyThrows
+    @Override
+    public List<T> findByName(String name) {
+        findByNamePreparedStatement.setObject(1, name);
+        List<T> result = parse (findByNamePreparedStatement.executeQuery());
+        return parse(findByNamePreparedStatement.executeQuery());
     }
 
     @SneakyThrows

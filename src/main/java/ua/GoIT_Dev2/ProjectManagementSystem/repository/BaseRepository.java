@@ -20,6 +20,8 @@ public interface BaseRepository<E extends BaseEntity<ID>, ID> {
 
     List<E> findAll();
 
+    List<E> findByName(String name);
+
     void close();
 
 }

@@ -39,6 +39,9 @@ a {
 	margin-top: 25px;
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 50%;
 }
 
 /* Dropdown Button */
@@ -150,4 +153,39 @@ a {
   border: none;
 }
 
+/* Table */
+.table {
+  width: 50%;
+  margin: 20px 0;
+  border: 5px solid #fff;
+  border-top: 5px solid #fff;
+  border-bottom: 3px solid #fff;
+  border-collapse: collapse;
+  outline: 3px solid var(--accent-color);
+  font-size: 15px;
+  background: #fff !important;
+}
+.table th {
+  font-weight: bold;
+  padding: 7px;
+  background: var(--accent-color);
+  border: none;
+  text-align: left;
+  font-size: 15px;
+  border-top: 3px solid #fff;
+  border-bottom: 3px solid var(--accent-color);
+}
+.table td {
+  padding: 7px;
+  border: none;
+  border-top: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  font-size: 15px;
+}
 
+.table thead {
+  text-transform: uppercase;
+}
+.table tbody tr:nth-child(even) {
+  background: #f8f8f8 !important;
+}

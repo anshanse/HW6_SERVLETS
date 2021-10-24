@@ -24,13 +24,19 @@
     <c:import url="/view/company/navbarcompany.jsp"/>
     <main>
       <h1>Delete company by ID</h1>
-      <form action="#" class="modal-form">
+      <form action="/company/delete" class="modal-form">
         <label class="modal-field">
           Enter ID
-          <input type="text" name="id" class="modal-input" required />
+          <input type="text" name="companyId" class="modal-input" required />
         </label>
         <button type="submit" class="modal-submit-btn btn">Delete!</button>
       </form>
+	  <div class="results">
+	  
+	  <c:if test="${not empty company}" >
+	  ${company.name}${message}
+	  </c:if>
+	  </div>
     </main>
   </body>
 </html>

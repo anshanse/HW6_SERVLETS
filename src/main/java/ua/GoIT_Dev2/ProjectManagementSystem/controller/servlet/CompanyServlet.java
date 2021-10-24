@@ -19,55 +19,72 @@ public class CompanyServlet extends HttpServlet {
     @Serial
     private static final long serialVersionUID = -5518363074971978271L;
 
-    private BaseService service = new BaseService();
+    private final BaseService service = new BaseService();
+    private final Class className = Company.class;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
-        String action = getAction(req);
         if (pathInfo.equals("/show")){
-            List<Company> allCompanies = service.getAll(Company.class);
-            req.setAttribute("allCompanies", allCompanies);
+            List<Company> companies = service.getAll(className);
+            req.setAttribute("companies", companies);
             req.getRequestDispatcher("/view/company/show.jsp").forward(req,resp);
         }
-        if (action.startsWith("/find")){
+        if (pathInfo.equals("/find")){
             String companyId = req.getParameter("companyId");
-            BaseEntity company = service.read(Company.class, Long.valueOf(companyId));
-            if (company == null){
-                String message = String.format("Company with ID %s not exist", companyId);
+            BaseEntity entity = service.getEntity(className, req.getParameter("companyId"), req.getParameter("companyName"));
+            if (entity == null){
+                String message = ("Company with input data not exists");
                 req.setAttribute("message", message);
-                req.getRequestDispatcher("/view/company/find.jsp").forward(req,resp);
+                req.getRequestDispatcher("/view/company/find.jsp").forward(req, resp);
             } else {
-                req.setAttribute("company", company);
+                req.setAttribute("company", entity);
                 req.getRequestDispatcher("/view/company/find.jsp").forward(req, resp);
             }
-        }else if (pathInfo.equals("create")){
+        }
+        if (pathInfo.equals("/get")){
+            Company company = (Company) service.read(className,Long.valueOf(req.getParameter("id")));
+            req.setAttribute("company", company);
+            req.getRequestDispatcher("/view/company/details.jsp").forward(req, resp);
+        }
+        if (pathInfo.equals("/create")){
+            if (!service.ifExist(Company.class,req)){
+                Company newCompany = Company.builder()
+                    .name(req.getParameter("name"))
+                    .city(req.getParameter("city"))
+                    .build();
+                req.setAttribute("company", service.save(className, newCompany));
+            }else{
+                req.setAttribute("existCompany", service.findByName(className, req.getParameter("name")).get(0));
+            }
             req.getRequestDispatcher("/view/company/create.jsp").forward(req,resp);
-        }else if (pathInfo.equals("delete")){
+
+        }
+        if (pathInfo.equals("/delete")){
+            Company company = (Company) service.read(className,Long.valueOf(req.getParameter("companyId")));
+            req.setAttribute("company", company);
+            String message = " was deleted";
+            req.setAttribute("message", message);
+            service.delete(className,Long.valueOf(req.getParameter("companyId")));
             req.getRequestDispatcher("/view/company/delete.jsp").forward(req,resp);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = getAction(req);
-        //if (action.startsWith("/find")) {
-            String companyId = req.getParameter("companyId");
-            BaseEntity company = service.read(Company.class, Long.valueOf(companyId));
-            if (company == null) {
-                String message = String.format("Company with ID %s not exist", companyId);
-                req.setAttribute("message", message);
-                req.getRequestDispatcher("/view/company/find.jsp").forward(req, resp);
-            } else {
-                req.setAttribute("company", company);
-                req.getRequestDispatcher("/view/company/find.jsp").forward(req, resp);
+        String pathInfo = req.getPathInfo();
+        if (pathInfo.equals("/create")){
+            if (!service.ifExist(Company.class,req)){
+                Company newCompany = Company.builder()
+                        .name(req.getParameter("name"))
+                        .city(req.getParameter("city"))
+                        .build();
+                req.setAttribute("company", service.save(className, newCompany));
+            }else{
+                req.setAttribute("existCompany", service.findByName(className, req.getParameter("name")).get(0));
             }
-        //}
-    }
+            req.getRequestDispatcher("/view/company/create.jsp").forward(req,resp);
 
-    private String getAction(HttpServletRequest req) {
-        String requestURI = req.getRequestURI();
-        String requestPathWithServletPath = req.getContextPath() + req.getServletPath();
-        return requestURI.substring(requestPathWithServletPath.length());
+        }
     }
 }

@@ -23,18 +23,46 @@
   <body>
     <c:import url="/view/company/navbarcompany.jsp"/>
     <main>
-      <h1>Create company</h1>
-      <form action="#" class="modal-form">
-        <label class="modal-field">
-          Enter name
-          <input type="text" name="name" class="modal-input" required />
-        </label>
-        <label class="modal-field">
-          Enter ID
-          <input type="text" name="id" class="modal-input" />
-        </label>
-        <button type="submit" class="modal-submit-btn btn">Create!</button>
-      </form>
+	  <c:if test="${empty company}" >
+		  <h1>Create company</h1>
+		  <form action="/company/" method="post" class="modal-form">
+			<label class="modal-field">
+			  Enter name
+			  <input type="text" name="name" class="modal-input" required />
+			</label>
+			<label class="modal-field">
+			  Enter city
+			  <input type="text" name="city" class="modal-input" />
+			</label>
+			<button type="submit" class="modal-submit-btn btn">Create!</button>
+		  </form>	  	  
+	  </c:if>
+	  
+		<c:if test="${not empty existCompany}">
+		<p>Company with name <a href="${pageContext.request.contextPath}/company/get?id=${existCompany.id}">${existCompany.name}</a> exists</p>
+		</c:if>
+		
+	  <c:if test="${not empty company}" >	  
+			<h1> Was create company with parametrs:</h1>
+			<table class="table">
+			<thead>
+			  <tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>City</th>
+			  </tr>
+			</thead>
+			<tbody>
+				
+			  <tr>
+				<td>${company.id}</td>
+				<td><a href="${pageContext.request.contextPath}/company/get?id=${company.id}">${company.name}</a></td>
+				<td>${company.city}</td>
+			  </tr>
+			  
+			</tbody>
+			</table>
+	</c:if>
     </main>
   </body>
 </html>

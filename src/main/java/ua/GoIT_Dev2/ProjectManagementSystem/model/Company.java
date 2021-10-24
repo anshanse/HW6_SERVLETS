@@ -27,4 +27,7 @@ public class Company implements BaseEntity<Long> {
     @Column(name = "company_name")
     private String name;
 
+    @Column(name = "city")
+    private String city;
+
 }

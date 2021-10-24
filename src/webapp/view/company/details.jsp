@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Show companies</title>
+    <title>Find company</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css"
@@ -22,16 +22,25 @@
   </head>
   <body>
     <c:import url="/view/company/navbarcompany.jsp"/>
+    <main>
 	
-	<main>
-          <h1>List of companies</h1>
-      <button type="button" class="modal-submit-btn btn"><a href="${pageContext.request.contextPath}/company/showAll">Get list!</a></button>
-	  jstl block:
-	  <c:if test="${not empty allCompanies}" >	
-	  <c:forEach items="${allCompanies}" var="company">
-	  <a href="${pageContext.request.contextPath}/company/get?id=${company.companyID}">${company.companyName}</a>
-		</c:forEach>
-		</c:if>
-	</main>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>City</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>${company.id}</td>
+            <td>${company.name}</td>
+            <td>${company.city}</td>
+          </tr>
+        </tbody>
+      </table>
+	  
+    </main>
   </body>
 </html>

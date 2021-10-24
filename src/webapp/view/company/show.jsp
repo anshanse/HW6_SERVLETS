@@ -25,14 +25,32 @@
 	
 	<main>
           <h1>List of companies</h1>
+		<c:if test="${empty companies}" >	
       <button type="button" class="modal-submit-btn btn" disabled><a class="link" href="${pageContext.request.contextPath}/company/show">Get list!</a></button>
-	  <div class="results">
-	  <c:if test="${not empty allCompanies}" >	
-	  <c:forEach items="${allCompanies}" var="company">
-	  <a href="${pageContext.request.contextPath}/company/get?id=${company.id}">${company.name}</a>
-		</c:forEach>
-		</c:if>
-	</div>
+	  </c:if>
+	  
+	
+	<c:if test="${not empty companies}" >	
+	<table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>City</th>
+          </tr>
+        </thead>
+        <tbody>
+			<c:forEach items="${companies}" var="company">
+          <tr>
+            <td>${company.id}</td>
+            <td><a href="${pageContext.request.contextPath}/company/get?id=${company.id}">${company.name}</a></td>
+            <td>${company.city}</td>
+          </tr>
+		  </c:forEach>
+        </tbody>
+      </table>
+	</c:if>
+	
 	</main>
   </body>
 </html>
