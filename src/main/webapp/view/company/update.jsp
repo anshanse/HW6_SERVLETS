@@ -23,20 +23,41 @@
   <body>
     <c:import url="/view/company/navbarcompany.jsp"/>
     <main>
-		  <h1>Find company by ID</h1>
-		  <form action="/company/find" method="get" class="modal-form">
+		<c:if test="${empty entity}" >
+		<h1>Find company to edit</h1>
+		<form action="/company/updateFind" method="get" class="modal-form">
 			<label class="modal-field">
 			  Enter company ID
-			  <input type="text" name="companyId" class="modal-input" pattern="\d+"/>
+			  <input type="text" name="entityId" class="modal-input" pattern="\d+"/>
 			</label>
 			<label class="modal-field">
 			  Enter company name
-			  <input type="text" name="companyName" class="modal-input" />
+			  <input type="text" name="entityName" class="modal-input" />
 			</label>
-			<button type="submit" class="modal-submit-btn btn">Search!</button>
-		
-		
+			<button type="submit" class="modal-submit-btn btn">Search!</button>		
 		</form>
+		</c:if>
+		
+		<c:if test="${not empty entity}" >
+		<h1>Update data</h1>
+		
+		<form action="/company/update" method="put" class="modal-form">
+			<label class="modal-field" style="display:none;">
+			  ID
+			  <input type="text" name="entityId" class="modal-input" value="${entity.id}" />
+			</label>
+			<label class="modal-field">
+			  Name
+			  <input type="text" name="entityName" class="modal-input" value="${entity.name}" />
+			</label>
+			<label class="modal-field">
+			  City
+			  <input type="text" name="entityCity" class="modal-input" value="${entity.city}" />
+			</label>
+			<button type="submit" class="modal-submit-btn btn">Update!</button>
+		</form>
+		</c:if>
+		
 		<div class="results">
 			<c:if test="${not empty company}" >	
 		  

@@ -30,17 +30,29 @@ public class CompanyServlet extends HttpServlet {
             req.setAttribute("companies", companies);
             req.getRequestDispatcher("/view/company/show.jsp").forward(req,resp);
         }
-        if (pathInfo.equals("/find")){
-            String companyId = req.getParameter("companyId");
-            BaseEntity entity = service.getEntity(className, req.getParameter("companyId"), req.getParameter("companyName"));
-            if (entity == null){
-                String message = ("Company with input data not exists");
-                req.setAttribute("message", message);
-                req.getRequestDispatcher("/view/company/find.jsp").forward(req, resp);
-            } else {
-                req.setAttribute("company", entity);
-                req.getRequestDispatcher("/view/company/find.jsp").forward(req, resp);
+        if (pathInfo.equals("/find")) {
+            if (req.getParameter("entityId") != null) {
+                BaseEntity entity = service.getEntity(className, req.getParameter("entityId"), req.getParameter("entityName"));
+                if (entity == null) {
+                    String message = ("Company with input data not exists");
+                    req.setAttribute("message", message);
+                } else {
+                    req.setAttribute("company", entity);
+                }
             }
+            req.getRequestDispatcher("/view/company/find.jsp").forward(req, resp);
+        }
+        if (pathInfo.equals("/updateFind")) {
+            if (req.getParameter("entityId") != null) {
+                BaseEntity entity = service.getEntity(className, req.getParameter("entityId"), req.getParameter("entityName"));
+                if (entity == null) {
+                    String message = ("Company with input data not exists");
+                    req.setAttribute("message", message);
+                } else {
+                    req.setAttribute("entity", entity);
+                }
+            }
+            req.getRequestDispatcher("/view/company/update.jsp").forward(req, resp);
         }
         if (pathInfo.equals("/get")){
             Company company = (Company) service.read(className,Long.valueOf(req.getParameter("id")));
@@ -48,24 +60,12 @@ public class CompanyServlet extends HttpServlet {
             req.getRequestDispatcher("/view/company/details.jsp").forward(req, resp);
         }
         if (pathInfo.equals("/create")){
-            if (!service.ifExist(Company.class,req)){
-                Company newCompany = Company.builder()
-                    .name(req.getParameter("name"))
-                    .city(req.getParameter("city"))
-                    .build();
-                req.setAttribute("company", service.save(className, newCompany));
-            }else{
-                req.setAttribute("existCompany", service.findByName(className, req.getParameter("name")).get(0));
-            }
             req.getRequestDispatcher("/view/company/create.jsp").forward(req,resp);
-
+        }
+        if (pathInfo.equals("/update")){
+            req.getRequestDispatcher("/view/company/update.jsp").forward(req,resp);
         }
         if (pathInfo.equals("/delete")){
-            Company company = (Company) service.read(className,Long.valueOf(req.getParameter("companyId")));
-            req.setAttribute("company", company);
-            String message = " was deleted";
-            req.setAttribute("message", message);
-            service.delete(className,Long.valueOf(req.getParameter("companyId")));
             req.getRequestDispatcher("/view/company/delete.jsp").forward(req,resp);
         }
     }
@@ -73,6 +73,7 @@ public class CompanyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
+        req.setCharacterEncoding("UTF-8");
         if (pathInfo.equals("/create")){
             if (!service.ifExist(Company.class,req)){
                 Company newCompany = Company.builder()
@@ -85,6 +86,34 @@ public class CompanyServlet extends HttpServlet {
             }
             req.getRequestDispatcher("/view/company/create.jsp").forward(req,resp);
 
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String pathInfo = req.getPathInfo();
+        req.setCharacterEncoding("UTF-8");
+        if (pathInfo.equals("/update")){
+            Company entity = (Company) service.read(Company.class, req.getParameter("entityId"));
+            entity.setName(req.getParameter("entityName"));
+            entity.setCity(req.getParameter("entityCity"));
+            service.save(Company.class, entity);
+            req.setAttribute("message", "Data updated");
+        }
+        req.getRequestDispatcher("/view/company/update.jsp").forward(req,resp);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String pathInfo = req.getPathInfo();
+        req.setCharacterEncoding("UTF-8");
+        if (pathInfo.equals("/delete")){
+            Company company = (Company) service.read(className,Long.valueOf(req.getParameter("companyId")));
+            req.setAttribute("company", company);
+            String message = " was deleted";
+            req.setAttribute("message", message);
+            service.delete(className,Long.valueOf(req.getParameter("companyId")));
+            req.getRequestDispatcher("/view/company/delete.jsp").forward(req,resp);
         }
     }
 }

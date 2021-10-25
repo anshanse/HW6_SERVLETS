@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create company</title>
+    <title>Find company</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css"
@@ -23,27 +23,23 @@
   <body>
     <c:import url="/view/company/navbarcompany.jsp"/>
     <main>
-	  <c:if test="${empty company}" >
-		  <h1>Create company</h1>
-		  <form action="/company/" method="post" class="modal-form">
+		  <h1>Find company by ID</h1>
+		  <form action="/company/find" method="get" class="modal-form">
 			<label class="modal-field">
-			  Enter name
-			  <input type="text" name="name" class="modal-input" required />
+			  Enter company ID
+			  <input type="text" name="entityId" class="modal-input" pattern="\d+"/>
 			</label>
 			<label class="modal-field">
-			  Enter city
-			  <input type="text" name="city" class="modal-input" />
+			  Enter company name
+			  <input type="text" name="entityName" class="modal-input" />
 			</label>
-			<button type="submit" class="modal-submit-btn btn">Create!</button>
-		  </form>	  	  
-	  </c:if>
-	  
-		<c:if test="${not empty existCompany}">
-		<p>Company with name <a href="${pageContext.request.contextPath}/company/get?id=${existCompany.id}">${existCompany.name}</a> exists</p>
-		</c:if>
+			<button type="submit" class="modal-submit-btn btn">Search!</button>
 		
-	  <c:if test="${not empty company}" >	  
-			<h1> Was create company with parametrs:</h1>
+		
+		</form>
+		<div class="results">
+			<c:if test="${not empty company}" >	
+		  
 			<table class="table">
 			<thead>
 			  <tr>
@@ -53,16 +49,17 @@
 			  </tr>
 			</thead>
 			<tbody>
-				
 			  <tr>
 				<td>${company.id}</td>
-				<td><a href="${pageContext.request.contextPath}/company/get?id=${company.id}">${company.name}</a></td>
+				<td>${company.name}</td>
 				<td>${company.city}</td>
 			  </tr>
-			  
 			</tbody>
-			</table>
-	</c:if>
+		  </table>
+			
+			</c:if>
+			${message}
+		</div>
     </main>
   </body>
 </html>
