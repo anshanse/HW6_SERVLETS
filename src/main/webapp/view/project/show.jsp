@@ -22,9 +22,27 @@
   </head>
   <body>
     <c:import url="/view/project/navbarProject.jsp"/>
-    <main>
-      <h1>List of projects</h1>
-      <button type="button" class="modal-submit-btn btn">Get list!</button>
-    </main>
+	
+	<main>
+		<c:if test="${not empty entities}" >	
+		<table class="table">
+			<thead>
+			  <tr>
+				<th>ID</th>
+				<th>Name</th>
+			  </tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${entities}" var="entity">
+			  <tr>
+				<td>${entity.id}</td>
+				<td><a href="${pageContext.request.contextPath}/project/get?id=${entity.id}">${entity.name}</a></td>
+				</tr>
+			  </c:forEach>
+			</tbody>
+		  </table>
+		</c:if>
+	
+	</main>
   </body>
 </html>

@@ -21,16 +21,22 @@
     </style>
   </head>
   <body>
-    <c:import url="/view/developer/navbarDev.jsp"/> 
+    <c:import url="/view/developer/navbarDev.jsp"/>
     <main>
       <h1>Delete developer by ID</h1>
-      <form action="#" class="modal-form">
+      <form action="/developer/delete" method="delete" class="modal-form">
         <label class="modal-field">
           Enter ID
-          <input type="text" name="id" class="modal-input" required />
+          <input type="text" name="entityId" class="modal-input" required />
         </label>
         <button type="submit" class="modal-submit-btn btn">Delete!</button>
       </form>
+	  <div class="results">
+	  
+	  <c:if test="${not empty entity}" >
+	  Developer ${entity.name}${message}
+	  </c:if>
+	  </div>
     </main>
   </body>
 </html>

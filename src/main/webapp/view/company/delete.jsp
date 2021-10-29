@@ -24,10 +24,10 @@
     <c:import url="/view/company/navbarcompany.jsp"/>
     <main>
       <h1>Delete company by ID</h1>
-      <form action="/company/delete" class="modal-form">
+      <form action="/company/delete" method="delete" class="modal-form">
         <label class="modal-field">
           Enter ID
-          <input type="text" name="companyId" class="modal-input" required />
+          <input type="text" name="entityId" class="modal-input" required />
         </label>
         <button type="submit" class="modal-submit-btn btn">Delete!</button>
       </form>

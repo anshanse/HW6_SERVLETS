@@ -58,7 +58,7 @@ public class BaseRepositoryImpl<T extends BaseEntity<ID>, ID> implements BaseRep
                 + fieldsForCreate + ")" + " VALUES (" + countValues + ");", generatedColumns);
         this.updatePreparedStatement = connection.prepareStatement(
                 "UPDATE " + tableName + " SET " + fieldsForUpdate + " WHERE id=?", generatedColumns);
-        this.findByNamePreparedStatement = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE company_name=?;", generatedColumns);
+        this.findByNamePreparedStatement = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE name=?;", generatedColumns);
     }
 
     private String getColumnName (Field field){

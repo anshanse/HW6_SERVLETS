@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Show skills</title>
+    <title>Show slills</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css"
@@ -22,9 +22,29 @@
   </head>
   <body>
     <c:import url="/view/skill/navbarSkill.jsp"/>
-    <main>
-      <h1>List of skills</h1>
-      <button type="button" class="modal-submit-btn btn">Get list!</button>
-    </main>
+	
+	<main>
+		<c:if test="${not empty entities}" >	
+		<table class="table">
+			<thead>
+			  <tr>
+				<th>ID</th>
+				<th>Skill</th>
+				<th>Grade</th>
+			  </tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${entities}" var="entity">
+			  <tr>
+				<td>${entity.id}</td>
+				<td>${entity.name}</td>
+				<td>${entity.grade}</td>
+				</tr>
+			  </c:forEach>
+			</tbody>
+		  </table>
+		</c:if>
+	
+	</main>
   </body>
 </html>

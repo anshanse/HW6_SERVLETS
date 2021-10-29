@@ -149,11 +149,21 @@ COMMIT;
 START TRANSACTION;
 USE second_DB;
 ALTER TABLE companies
+CHANGE COLUMN `company_name` `name` VARCHAR(255) NOT NULL ;
 ADD COLUMN `city` VARCHAR(45) NULL AFTER `company_name`;
 
 UPDATE `second_db`.`companies` SET `city` = 'City1' WHERE (`id` = '1');
 UPDATE `second_db`.`companies` SET `city` = 'City2' WHERE (`id` = '2');
 UPDATE `second_db`.`companies` SET `city` = 'City3' WHERE (`id` = '3');
+
+ALTER TABLE `second_db`.`customers` 
+CHANGE COLUMN `customer_name` `name` VARCHAR(255) NOT NULL ;
+
+ALTER TABLE `second_db`.`projects` 
+CHANGE COLUMN `project_name` `name` VARCHAR(255) NOT NULL ;
+
+ALTER TABLE `second_db`.`skills` 
+CHANGE COLUMN `skill` `name` VARCHAR(45) NOT NULL ;
 
 COMMIT;
 

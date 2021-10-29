@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Delete skill</title>
+    <title>Delete Skill</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css"
@@ -24,13 +24,19 @@
     <c:import url="/view/skill/navbarSkill.jsp"/>
     <main>
       <h1>Delete skill by ID</h1>
-      <form action="#" class="modal-form">
+      <form action="/skill/delete" method="delete" class="modal-form">
         <label class="modal-field">
           Enter ID
-          <input type="text" name="id" class="modal-input" required />
+          <input type="text" name="entityId" class="modal-input" required />
         </label>
         <button type="submit" class="modal-submit-btn btn">Delete!</button>
       </form>
+	  <div class="results">
+	  
+	  <c:if test="${not empty entity}" >
+	  Skill ${entity.name}${message}
+	  </c:if>
+	  </div>
     </main>
   </body>
 </html>

@@ -24,13 +24,19 @@
     <c:import url="/view/project/navbarProject.jsp"/>
     <main>
       <h1>Delete project by ID</h1>
-      <form action="#" class="modal-form">
+      <form action="/project/delete" method="delete" class="modal-form">
         <label class="modal-field">
           Enter ID
-          <input type="text" name="id" class="modal-input" required />
+          <input type="text" name="entityId" class="modal-input" required />
         </label>
         <button type="submit" class="modal-submit-btn btn">Delete!</button>
       </form>
+	  <div class="results">
+	  
+	  <c:if test="${not empty entity}" >
+	  project ${entity.name}${message}
+	  </c:if>
+	  </div>
     </main>
   </body>
 </html>

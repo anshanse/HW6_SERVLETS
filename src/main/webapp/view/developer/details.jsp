@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Delete customer</title>
+    <title>Developer detail</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css"
@@ -21,22 +21,34 @@
     </style>
   </head>
   <body>
-    <c:import url="/view/customer/navbarCustomer.jsp"/>
+    <c:import url="/view/developer/navbarDev.jsp"/>
     <main>
-      <h1>Delete customer by ID</h1>
-      <form action="/customer/delete" method=""delete" class="modal-form">
-        <label class="modal-field">
-          Enter ID
-          <input type="text" name="entityId" class="modal-input" required />
-        </label>
-        <button type="submit" class="modal-submit-btn btn">Delete!</button>
-      </form>
-	  <div class="results">
+	
+      <table class="table">
+			<thead>
+			  <tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Gender</th>
+				<th>Salary</th>
+				<th>Other information</th>
+			  </tr>
+			</thead>
+			<tbody>
+				
+			  <tr>
+				<td>${entity.id}</td>
+				<td>${entity.name}</td>
+				<td>${entity.age}</td>
+				<td>${entity.sex}</td>
+				<td>${entity.salary}</td>
+				<td>${entity.info}</td>
+				</tr>
+			  
+			</tbody>
+			</table>
 	  
-	  <c:if test="${not empty customer}" >
-	  ${customer.name}${message}
-	  </c:if>
-	  </div>
     </main>
   </body>
 </html>

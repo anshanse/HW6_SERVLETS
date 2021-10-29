@@ -24,6 +24,7 @@
               <a href="/customer/show">Show customers</a>
               <a href="/customer/find">Find customer</a>
               <a href="/customer/create">Create customer</a>
+			  <a href="/customer/update">Update customer</a>
               <a href="/customer/delete">Delete customer</a>
             </div>
           </li>
@@ -34,6 +35,7 @@
               <a href="/developer/show">Show developers</a>
               <a href="/developer/find">Find developer</a>
               <a href="/developer/create">Create developer</a>
+			  <a href="/developer/update">Update developer</a>
               <a href="/developer/delete">Delete developer</a>
             </div>
           </li>
@@ -44,6 +46,7 @@
               <a href="/project/show">Show projects</a>
               <a href="/project/find">Find project</a>
               <a href="/project/create">Create project</a>
+			  <a href="/project/update">Update project</a>
               <a href="/project/delete">Delete project</a>
             </div>
           </li>
@@ -54,6 +57,7 @@
               <a href="/skill/show">Show skills</a>
               <a href="/skill/find">Find skill</a>
               <a href="/skill/create">Create skill</a>
+			  <a href="/skill/update">Update skill</a>
               <a href="/skill/delete">Delete skill</a>
             </div>
           </li>

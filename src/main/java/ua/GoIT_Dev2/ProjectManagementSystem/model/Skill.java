@@ -24,8 +24,8 @@ public class Skill implements BaseEntity<Long>{
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "skill")
-    private String skill;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "grade")
     private String grade;

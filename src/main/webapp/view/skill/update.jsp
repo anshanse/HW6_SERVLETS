@@ -7,7 +7,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Find skill</title>
+    <title>Update skill</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css"
@@ -24,63 +24,38 @@
   <body>
     <c:import url="/view/skill/navbarSkill.jsp"/>
     <main>
-		  <h1>Find skill</h1>
-		  <form action="/skill/find" method="get" class="modal-form">
+		<c:if test="${empty entity}" >
+		<h1>Find skill to edit</h1>
+		<form action="/skill/updateFind" method="get" class="modal-form">
 			<label class="modal-field">
-			  Enter skill ID (find by ID)
+			  Enter skill ID
 			  <input type="text" name="entityId" class="modal-input" pattern="\d+"/>
 			</label>
-			<label class="modal-field">
-			  Enter skill name (find by name)
-			  <input type="text" name="entityName" class="modal-input" "/>
-			</label>
-			<label class="modal-field">
-			  Enter skill grade (find by name)
-			  <input type="text" name="grade" class="modal-input" "/>
-			</label>
-			<button type="submit" class="modal-submit-btn btn">Search!</button>
-		
-		
+			<button type="submit" class="modal-submit-btn btn">Search!</button>		
 		</form>
-		<div class="results">
-			<c:if test="${not empty entity}" >	
-			<table class="table">
-			<thead>
-			  <tr>
-				<th>ID</th>
-				<th>Name</th>
-				<th>grde</th>
-			  </tr>
-			</thead>
-			<tbody>
-			  <tr>
-				<td>${entity.id}</td>
-				<td>${entity.name}</td>
-				<td>${entity.grade}</td>
-				</tr>
-			</tbody>
-			</table>
-			</c:if>
-			<c:if test="${not empty entities}" >	
-		<table class="table">
-			<thead>
-			  <tr>
-				<th>ID</th>
-				<th>Skill</th>
-				<th>Grade</th>
-			  </tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${entities}" var="entity">
-			  <tr>
-				<td>${entity.id}</td>
-				<td>${entity.name}</td>
-				<td>${entity.grade}</td>
-				</tr>
-			  </c:forEach>
-			</tbody>
-		  </table>
 		</c:if>
+		
+		<c:if test="${not empty entity}" >
+		<h1>Update data</h1>
+		
+		<form action="/skill/update" method="put" class="modal-form">
+			<label class="modal-field" style="display:none;">
+			  ID
+			  <input type="text" name="entityId" class="modal-input" value="${entity.id}" />
+			</label>
+			<label class="modal-field">
+			  Name
+			  <input type="text" name="entityName" class="modal-input" value="${entity.name}" />
+			</label>
+			<label class="modal-field">
+			  Grade
+			  <input type="text" name="grade" class="modal-input" value="${entity.grade}" />
+			</label>
+			<button type="submit" class="modal-submit-btn btn">Update!</button>
+		</form>
+		</c:if>
+		
+		<div class="results">
 			${message}
 		</div>
     </main>

@@ -24,6 +24,6 @@ public class Customer implements BaseEntity<Long> {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "customer_name")
+    @Column(name = "name")
     private String name;
 }

@@ -23,18 +23,40 @@
   <body>
     <c:import url="/view/customer/navbarCustomer.jsp"/>
     <main>
-      <h1>Create customer</h1>
-      <form action="#" class="modal-form">
-        <label class="modal-field">
-          Enter name
-          <input type="text" name="name" class="modal-input" required />
-        </label>
-        <label class="modal-field">
-          Enter ID
-          <input type="text" name="id" class="modal-input" />
-        </label>
-        <button type="submit" class="modal-submit-btn btn">Create!</button>
-      </form>
+	  <c:if test="${empty entity}" >
+		  <h1>Create customer</h1>
+		  <form action="/customer/create" method="post" class="modal-form">
+			<label class="modal-field">
+			  Enter name
+			  <input type="text" name="name" class="modal-input" required />
+			</label>
+			<button type="submit" class="modal-submit-btn btn">Create!</button>
+		  </form>	  	  
+	  </c:if>
+	  
+		<c:if test="${not empty existEntity}">
+		<p>Customer with name <a href="${pageContext.request.contextPath}/customer/get?id=${existCompany.id}">${existEntity.name}</a> exists</p>
+		</c:if>
+		
+	  <c:if test="${not empty entity}" >	  
+			<h1> Was create customer with parametrs:</h1>
+			<table class="table">
+			<thead>
+			  <tr>
+				<th>ID</th>
+				<th>Name</th>
+			  </tr>
+			</thead>
+			<tbody>
+				
+			  <tr>
+				<td>${entity.id}</td>
+				<td><a href="${pageContext.request.contextPath}/customer/get?id=${entity.id}">${entity.name}</a></td>
+				</tr>
+			  
+			</tbody>
+			</table>
+	</c:if>
     </main>
   </body>
 </html>

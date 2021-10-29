@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Show customers</title>
+    <title>Show companies</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css"
@@ -22,9 +22,27 @@
   </head>
   <body>
     <c:import url="/view/customer/navbarCustomer.jsp"/>
-    <main>
-      <h1>List of customers</h1>
-      <button type="button" class="modal-submit-btn btn">Get list!</button>
-    </main>
+	
+	<main>
+		<c:if test="${not empty entities}" >	
+		<table class="table">
+			<thead>
+			  <tr>
+				<th>ID</th>
+				<th>Name</th>
+			  </tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${entities}" var="entity">
+			  <tr>
+				<td>${entity.id}</td>
+				<td><a href="${pageContext.request.contextPath}/customer/get?id=${entity.id}">${entity.name}</a></td>
+				</tr>
+			  </c:forEach>
+			</tbody>
+		  </table>
+		</c:if>
+	
+	</main>
   </body>
 </html>

@@ -23,14 +23,41 @@
   <body>
     <c:import url="/view/customer/navbarCustomer.jsp"/>
     <main>
-      <h1>Find customer by ID or name</h1>
-      <form action="#" class="modal-form">
-        <label class="modal-field">
-          Enter ID or name
-          <input type="text" name="customer" class="modal-input" required />
-        </label>
-        <button type="submit" class="modal-submit-btn btn">Search!</button>
-      </form>
+		  <h1>Find customer</h1>
+		  <form action="/customer/find" method="get" class="modal-form">
+			<label class="modal-field">
+			  Enter customer ID
+			  <input type="text" name="entityId" class="modal-input" pattern="\d+"/>
+			</label>
+			<label class="modal-field">
+			  Enter customer name
+			  <input type="text" name="entityName" class="modal-input" />
+			</label>
+			<button type="submit" class="modal-submit-btn btn">Search!</button>
+		
+		
+		</form>
+		<div class="results">
+			<c:if test="${not empty entity}" >	
+		  
+			<table class="table">
+			<thead>
+			  <tr>
+				<th>ID</th>
+				<th>Name</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr>
+				<td>${entity.id}</td>
+				<td>${entity.name}</td>
+			  </tr>
+			</tbody>
+		  </table>
+			
+			</c:if>
+			${message}
+		</div>
     </main>
   </body>
 </html>

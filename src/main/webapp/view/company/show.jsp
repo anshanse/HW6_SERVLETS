@@ -24,32 +24,24 @@
     <c:import url="/view/company/navbarcompany.jsp"/>
 	
 	<main>
-          <h1>List of companies</h1>
-		<c:if test="${empty companies}" >	
-      <button type="button" class="modal-submit-btn btn" disabled><a class="link" href="${pageContext.request.contextPath}/company/show">Get list!</a></button>
-	  </c:if>
-	  
-	
-	<c:if test="${not empty companies}" >	
-	<table class="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>City</th>
-          </tr>
-        </thead>
-        <tbody>
-			<c:forEach items="${companies}" var="company">
-          <tr>
-            <td>${company.id}</td>
-            <td><a href="${pageContext.request.contextPath}/company/get?id=${company.id}">${company.name}</a></td>
-            <td>${company.city}</td>
-          </tr>
-		  </c:forEach>
-        </tbody>
-      </table>
-	</c:if>
+		<c:if test="${not empty entities}" >	
+		<table class="table">
+			<thead>
+			  <tr>
+				<th>ID</th>
+				<th>Name</th>
+			  </tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${entities}" var="entity">
+			  <tr>
+				<td>${entity.id}</td>
+				<td><a href="${pageContext.request.contextPath}/company/get?id=${entity.id}">${entity.name}</a></td>
+				</tr>
+			  </c:forEach>
+			</tbody>
+		  </table>
+		</c:if>
 	
 	</main>
   </body>

@@ -21,16 +21,53 @@
     </style>
   </head>
   <body>
-    <c:import url="/view/developer/navbarDev.jsp"/> 
+    <c:import url="/view/developer/navbarDev.jsp"/>
     <main>
-      <h1>Find developer by ID or name</h1>
-      <form action="#" class="modal-form">
-        <label class="modal-field">
-          Enter ID or name
-          <input type="text" name="developer" class="modal-input" required />
-        </label>
-        <button type="submit" class="modal-submit-btn btn">Search!</button>
-      </form>
+		  <h1>Find developer</h1>
+		  <form action="/developer/find" method="get" class="modal-form">
+			<label class="modal-field">
+			  Enter developer ID
+			  <input type="text" name="entityId" class="modal-input" pattern="\d+"/>
+			</label>
+			<label class="modal-field">
+			  Enter developer name
+			  <input type="text" name="entityName" class="modal-input" />
+			</label>
+			<button type="submit" class="modal-submit-btn btn">Search!</button>
+		
+		
+		</form>
+		<div class="results">
+			<c:if test="${not empty entity}" >	
+		  
+			<table class="table" style="min-width:35%" >
+			<thead>
+			  <tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Gender</th>
+				<th>Salary</th>
+				<th>Other information</th>
+			  </tr>
+			</thead>
+			<tbody>
+				
+			  <tr>
+				<td>${entity.id}</td>
+				<td>${entity.name}</td>
+				<td>${entity.age}</td>
+				<td>${entity.sex}</td>
+				<td>${entity.salary}</td>
+				<td>${entity.info}</td>
+				</tr>
+			  
+			</tbody>
+			</table>
+			
+			</c:if>
+			${message}
+		</div>
     </main>
   </body>
 </html>

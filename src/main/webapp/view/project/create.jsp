@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,18 +24,51 @@
   <body>
     <c:import url="/view/project/navbarProject.jsp"/>
     <main>
-      <h1>Create project</h1>
-      <form action="#" class="modal-form">
-        <label class="modal-field">
-          Enter name
-          <input type="text" name="name" class="modal-input" required />
-        </label>
-        <label class="modal-field">
-          Enter ID
-          <input type="text" name="id" class="modal-input" />
-        </label>
-        <button type="submit" class="modal-submit-btn btn">Create!</button>
-      </form>
+	  <c:if test="${empty entity}" >
+		  <h1>Create project</h1>
+		  <form action="/project/create" method="post" class="modal-form">
+			<label class="modal-field">
+			  Enter name
+			  <input type="text" name="name" class="modal-input" required />
+			</label>
+			<label class="modal-field">
+			  Enter cost
+			  <input type="text" name="cost" class="modal-input" pattern="\d+" />
+			</label>
+			<label class="modal-field">
+			  Enter start date (yyyy-mm-dd)
+			  <input type="text" name="startDate" class="modal-input" pattern="\d{4}-\d{2}-\d{2}"/>
+			</label>
+			<button type="submit" class="modal-submit-btn btn">Create!</button>
+		  </form>	  	  
+	  </c:if>
+	  
+		<c:if test="${not empty existEntity}">
+		<p>Project with name <a href="${pageContext.request.contextPath}/project/get?id=${existCompany.id}">${existEntity.name}</a> exists</p>
+		</c:if>
+		
+	  <c:if test="${not empty entity}" >	  
+			<h1> Was create project with parametrs:</h1>
+			<table class="table">
+			<thead>
+			  <tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Cost</th>
+				<th>Start date</th>
+			  </tr>
+			</thead>
+			<tbody>
+				
+			  <tr>
+				<td>${entity.id}</td>
+				<td>${entity.name}</td>
+				<td>${entity.cost}</td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd" value="${entity.startDate}" /></td>
+				</tr>
+			</tbody>
+			</table>
+	</c:if>
     </main>
   </body>
 </html>
